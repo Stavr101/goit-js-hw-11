@@ -12,7 +12,38 @@
 //     this.searchQuery = '';
 //     this.page = 1;
 //   }
+
 //   fetchArticles() {
+//     const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`;
+
+//     return fetch(url, options)
+//       .then(response => response.json())
+//       .then(data => console.log(data))
+//       .catch(error => console.log(error));
+//     // .then(({ articles }) => {
+//     // this.incrementPage();
+//     // return articles;
+//     //   });
+//   }
+
+//   incrementPage() {
+//     this.page += 1;
+//   }
+
+//   resetPage() {
+//     this.page = 1;
+//   }
+
+//   get query() {
+//     return this.searchQuery;
+//   }
+
+//   set query(newQuery) {
+//     this.searchQuery = newQuery;
+//   }
+// }
+
+//     fetchGallery() {
 //     const getPosts = async () => {
 //       try {
 //         const response = await axios.get(
@@ -24,34 +55,21 @@
 //         console.log(error);
 //       }
 //     };
+//   }
 
-// const url = ;
+//   incrementPage() {
+//     this.page += 1;
+//   }
 
-// return fetch(url, options)
-//   .then(response => response.json())
-//   .then(data => console.log(data))
-//   .catch(error => console.log(error));
-// .then(({ articles }) => {
-//
-//   return articles;
-// })
-// }
+//   resetPage() {
+//     this.page = 1;
+//   }
 
-// getPosts();
+//   get query() {
+//     return this.searchQuery;
+//   }
 
-// incrementPage() {
-//   this.page += 1;
-// }
-
-// resetPage() {
-//   this.page = 1;
-// }
-
-// get query() {
-//   return this.searchQuery;
-// }
-
-// set query(newQuery) {
-//   this.searchQuery = newQuery;
-// }
+//   set query(newQuery) {
+//     this.searchQuery = newQuery;
+//   }
 // }
