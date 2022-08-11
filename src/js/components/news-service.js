@@ -1,12 +1,6 @@
 const API_KEY = '29154782-64abcd202d8466e583ce5ca87';
 const BASE_URL = 'https://pixabay.com/api';
 
-// const options = {
-//   headers: {
-//     Authorization: API_KEY,
-//   },
-// };
-
 export default class NewsApiService {
   constructor() {
     this.searchQuery = '';
@@ -22,7 +16,6 @@ export default class NewsApiService {
         this.incrementPage();
         return data.hits;
       });
-    //   .then(console.log);
   }
 
   incrementPage() {

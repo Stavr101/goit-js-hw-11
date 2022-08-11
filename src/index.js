@@ -39,17 +39,20 @@ function onSearch(e) {
   newsApiService.fetchGallery().then(hits => console.log(hits));
 }
 
-function fetchGallery() {
-  loadMoreBtn.disable();
-  newsApiService.fetchGallery();
-  loadMoreBtn.enable();
-}
-
 function onLoadMore() {
   newsApiService.fetchGallery().then(hits => console.log(hits));
 }
 
-const markup = hits
+// function fetchGallery() {
+//   loadMoreBtn.disable();
+//   newsApiService.fetchGallery();
+//   loadMoreBtn.enable();
+// }
+
+function appendMarkupInGallery(hits) {
+  refs.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
+}
+const markup = data.hits
   .map(
     (
       webformatURL,
@@ -59,31 +62,31 @@ const markup = hits
       comments,
       downloads
     ) => `<div class="photo-card">
-//   <img src="${webformatURL}" alt="${tags}" loading="lazy" />
-//   <div class="info">
-//     <p class="info-item">
-//       <b>Likes ${likes}</b>
-//     </p>
-//     <p class="info-item">
-//       <b>Views ${views}</b>
-//     </p>
-//     <p class="info-item">
-//       <b>Comments ${comments}</b>
-//     </p>
-//     <p class="info-item">
-//       <b>Downloads ${downloads}</b>
-//     </p>
-//   </div>
-// </div>`
+// //   <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+// //   <div class="info">
+// //     <p class="info-item">
+// //       <b>Likes ${likes}</b>
+// //     </p>
+// //     <p class="info-item">
+// //       <b>Views ${views}</b>
+// //     </p>
+// //     <p class="info-item">
+// //       <b>Comments ${comments}</b>
+// //     </p>
+// //     <p class="info-item">
+// //       <b>Downloads ${downloads}</b>
+// //     </p>
+// //   </div>
+// // </div>`
   )
   .join('');
 
-console.log(markup);
+// console.log(markup);
 
-function clearGalleryContainer() {
-  refs.galleryContainer.innerHTML = '';
-}
+// function clearGalleryContainer() {
+//   refs.galleryContainer.innerHTML = '';
+// }
 
-function appendArticlesMarkup() {
-  refs.galleryContainer.insertAdjacentHTML('afterbegin', markup);
-}
+// function appendArticlesMarkup() {
+//   refs.galleryContainer.insertAdjacentHTML('afterbegin', markup);
+// }
