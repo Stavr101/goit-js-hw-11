@@ -24,7 +24,7 @@ refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
 function onSearch(e) {
   e.preventDefault();
-  // clearGalleryContainer();
+
   newsApiService.query = e.currentTarget.elements.searchQuery.value.trim();
   // console.log(newsApiService.query);
 
@@ -35,12 +35,17 @@ function onSearch(e) {
   loadMoreBtn.show();
   newsApiService.resetPage();
   // clearArticlesContainer();
+  clearGalleryContainer();
 
-  newsApiService.fetchGallery().then(hits => console.log(hits));
+  newsApiService.fetchGallery().then(hits => {
+    insertContent(hits);
+  });
 }
 
 function onLoadMore() {
-  newsApiService.fetchGallery().then(hits => console.log(hits));
+  newsApiService.fetchGallery().then(hits => {
+    insertContent(hits);
+  });
 }
 
 // function fetchGallery() {
@@ -49,44 +54,40 @@ function onLoadMore() {
 //   loadMoreBtn.enable();
 // }
 
-function appendMarkupInGallery(hits) {
-  refs.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
+const createListItem = item => ` <a href="${
+  item.largeImageURL ? item.largeImageURL : ''
+}>
+<div class="photo-card">
+  ${
+    item.webformatURL
+      ? `<img src="${item.webformatURL}" alt="${item.tags}" loading="lazy"`
+      : ''
+  } />
+  <div class="info">
+  <p class="info-item">
+       <b>Likes ${item.likes ? item.likes : ''}</b>
+     </p>
+     <p class="info-item">
+       <b>Views ${item.views ? item.views : ''}</b>
+     </p>
+     <p class="info-item">
+       <b>Comments ${item.comments ? item.comments : ''}</b>
+     </p>
+     <p class="info-item">
+       <b>Downloads ${item.downloads ? item.downloads : ''}</b>
+     </p>
+   </div>
+ </div></a>`;
+
+// const generateContent = (array) => array?.reduce((acc, item) => acc + createListItem(item), "");
+const generateContent = array =>
+  array ? array.reduce((acc, item) => acc + createListItem(item), '') : '';
+
+const insertContent = array => {
+  const result = generateContent(array);
+  refs.galleryContainer.insertAdjacentHTML('beforeend', result);
+};
+
+function clearGalleryContainer() {
+  refs.galleryContainer.innerHTML = '';
 }
-const markup = data.hits
-  .map(
-    (
-      webformatURL,
-      tags,
-      likes,
-      views,
-      comments,
-      downloads
-    ) => `<div class="photo-card">
-// //   <img src="${webformatURL}" alt="${tags}" loading="lazy" />
-// //   <div class="info">
-// //     <p class="info-item">
-// //       <b>Likes ${likes}</b>
-// //     </p>
-// //     <p class="info-item">
-// //       <b>Views ${views}</b>
-// //     </p>
-// //     <p class="info-item">
-// //       <b>Comments ${comments}</b>
-// //     </p>
-// //     <p class="info-item">
-// //       <b>Downloads ${downloads}</b>
-// //     </p>
-// //   </div>
-// // </div>`
-  )
-  .join('');
-
-// console.log(markup);
-
-// function clearGalleryContainer() {
-//   refs.galleryContainer.innerHTML = '';
-// }
-
-// function appendArticlesMarkup() {
-//   refs.galleryContainer.insertAdjacentHTML('afterbegin', markup);
-// }
