@@ -14,7 +14,7 @@ export default class NewsApiService {
       .then(response => response.json())
       .then(data => {
         this.incrementPage();
-        return data.hits;
+        return data;
       });
   }
 

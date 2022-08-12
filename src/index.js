@@ -37,14 +37,18 @@ function onSearch(e) {
   // clearArticlesContainer();
   clearGalleryContainer();
 
-  newsApiService.fetchGallery().then(hits => {
-    insertContent(hits);
+  newsApiService.fetchGallery().then(data => {
+    // console.log('data', data);
+    Notify.success(`Hooray! We found ${data.totalHits} images`);
+    insertContent(data.hits);
   });
 }
 
 function onLoadMore() {
-  newsApiService.fetchGallery().then(hits => {
-    insertContent(hits);
+  newsApiService.fetchGallery().then(data => {
+    // console.log('data', data);
+    Notify.success(`Hooray! We found ${data.totalHits} images`);
+    insertContent(data.hits);
   });
 }
 
