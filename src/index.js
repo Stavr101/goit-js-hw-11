@@ -64,10 +64,10 @@ function onLoadMore() {
   });
 }
 
-const createListItem = item => ` <a href="${
-  item.largeImageURL ? item.largeImageURL : ''
-}>
-<div class="photo-card">
+const createListItem = item =>
+  `<a href="${
+    item.largeImageURL ? item.largeImageURL : ''
+  }><div class="photo-card">
   ${
     item.webformatURL
       ? `<img src="${item.webformatURL}" alt="${item.tags}" loading="lazy"`
@@ -95,21 +95,21 @@ const generateContent = array =>
 const insertContent = array => {
   const result = generateContent(array);
   refs.galleryContainer.insertAdjacentHTML('beforeend', result);
+  new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionPosition: 'bottom',
+    animationSpeed: 250,
+  });
 };
 
 function clearGalleryContainer() {
   refs.galleryContainer.innerHTML = '';
 }
-const { height: cardHeight } =
-  refs.galleryContainer.firstElementChild.getBoundingClientRect();
 
-window.scrollBy({
-  top: cardHeight * 2,
-  behavior: 'smooth',
-});
+// const { height: cardHeight } =
+//   refs.galleryContainer.firstElementChild.getBoundingClientRect();
 
-new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionPosition: 'bottom',
-  animationSpeed: 250,
-});
+// window.scrollBy({
+//   top: cardHeight * 2,
+//   behavior: 'smooth',
+// });
