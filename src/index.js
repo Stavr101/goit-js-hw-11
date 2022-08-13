@@ -20,44 +20,49 @@ const loadMoreBtn = new LoadMoreBtn({
 const newsApiService = new NewsApiService();
 
 refs.searchForm.addEventListener('submit', onSearch);
-refs.loadMoreBtn.addEventListener('click', onLoadMore);
+loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
 
 function onSearch(e) {
   e.preventDefault();
 
   newsApiService.query = e.currentTarget.elements.searchQuery.value.trim();
-  // console.log(newsApiService.query);
 
   if (newsApiService.query === '') {
     return Notify.failure('Введи что-то нормальное');
   }
 
-  loadMoreBtn.show();
   newsApiService.resetPage();
-  // clearArticlesContainer();
   clearGalleryContainer();
 
   newsApiService.fetchGallery().then(data => {
-    // console.log('data', data);
-    Notify.success(`Hooray! We found ${data.totalHits} images`);
-    insertContent(data.hits);
+    if (data.hits.length === 0) {
+      Notify.failure(
+        `Sorry, there are no images matching your search query. Please try again.`
+      );
+    } else {
+      Notify.success(`Hooray! We found ${data.totalHits} images`);
+      insertContent(data.hits);
+      loadMoreBtn.show();
+    }
+    if (newsApiService.page > Math.ceil(data.total / 40)) {
+      loadMoreBtn.hide();
+    }
   });
 }
 
 function onLoadMore() {
   newsApiService.fetchGallery().then(data => {
-    // console.log('data', data);
     Notify.success(`Hooray! We found ${data.totalHits} images`);
-    insertContent(data.hits);
-    // gallery.refresh();
+    if (newsApiService.page > Math.ceil(data.total / 40)) {
+      Notify.success(
+        `We're sorry, but you've reached the end of search results.`
+      );
+      loadMoreBtn.hide();
+    } else {
+      insertContent(data.hits);
+    }
   });
 }
-
-// function fetchGallery() {
-//   loadMoreBtn.disable();
-//   newsApiService.fetchGallery();
-//   loadMoreBtn.enable();
-// }
 
 const createListItem = item => ` <a href="${
   item.largeImageURL ? item.largeImageURL : ''
@@ -84,7 +89,6 @@ const createListItem = item => ` <a href="${
    </div>
  </div></a>`;
 
-// const generateContent = (array) => array?.reduce((acc, item) => acc + createListItem(item), "");
 const generateContent = array =>
   array ? array.reduce((acc, item) => acc + createListItem(item), '') : '';
 
@@ -96,10 +100,19 @@ const insertContent = array => {
 function clearGalleryContainer() {
   refs.galleryContainer.innerHTML = '';
 }
+const { height: cardHeight } =
+  refs.galleryContainer.firstElementChild.getBoundingClientRect();
+
+window.scrollBy({
+  top: cardHeight * 2,
+  behavior: 'smooth',
+});
+
+let gallery = '.gallery a'.simpleLightbox();
+
+gallery.next(); // Next Image
 
 // let gallery = new SimpleLightbox('.gallery a', {
 //   captionDelay: 250,
 //   captionPosition: 'bottom',
 // });
-
-// // Next Image
