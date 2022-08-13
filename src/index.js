@@ -108,11 +108,8 @@ window.scrollBy({
   behavior: 'smooth',
 });
 
-let gallery = '.gallery a'.simpleLightbox();
-
-gallery.next(); // Next Image
-
-// let gallery = new SimpleLightbox('.gallery a', {
-//   captionDelay: 250,
-//   captionPosition: 'bottom',
-// });
+new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  animationSpeed: 250,
+});
