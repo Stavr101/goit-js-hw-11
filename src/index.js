@@ -49,6 +49,7 @@ function onLoadMore() {
     // console.log('data', data);
     Notify.success(`Hooray! We found ${data.totalHits} images`);
     insertContent(data.hits);
+    // gallery.refresh();
   });
 }
 
@@ -95,3 +96,10 @@ const insertContent = array => {
 function clearGalleryContainer() {
   refs.galleryContainer.innerHTML = '';
 }
+
+// let gallery = new SimpleLightbox('.gallery a', {
+//   captionDelay: 250,
+//   captionPosition: 'bottom',
+// });
+
+// // Next Image
