@@ -94,7 +94,12 @@ const generateContent = array =>
 const insertContent = array => {
   const result = generateContent(array);
   refs.galleryContainer.insertAdjacentHTML('beforeend', result);
-  simpleLightbox();
+  let gallery = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionDelay: 250,
+    captionPosition: 'bottom',
+  });
+  gallery.refresh();
 };
 
 function clearGalleryContainer() {
@@ -116,12 +121,3 @@ function clearGalleryContainer() {
 //     behavior: 'smooth',
 //   });
 // }
-
-function simpleLightbox() {
-  let gallery = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionDelay: 250,
-    captionPosition: 'bottom',
-  });
-  gallery.refresh();
-}
