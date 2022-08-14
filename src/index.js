@@ -42,6 +42,7 @@ function onSearch(e) {
     } else {
       Notify.success(`Hooray! We found ${data.totalHits} images`);
       insertContent(data.hits);
+
       loadMoreBtn.show();
     }
     if (newsApiService.page > Math.ceil(data.total / 40)) {
@@ -65,9 +66,7 @@ function onLoadMore() {
 }
 
 const createListItem = item =>
-  `<a href="${
-    item.largeImageURL ? item.largeImageURL : ''
-  }><div class="photo-card">
+  `<a class="gallery__link" href="${item.largeImageURL}><div class="photo-card">
   ${
     item.webformatURL
       ? `<img src="${item.webformatURL}" alt="${item.tags}" loading="lazy"`
@@ -95,17 +94,12 @@ const generateContent = array =>
 const insertContent = array => {
   const result = generateContent(array);
   refs.galleryContainer.insertAdjacentHTML('beforeend', result);
-  new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionPosition: 'bottom',
-    animationSpeed: 250,
-  });
+  simpleLightbox();
 };
 
 function clearGalleryContainer() {
   refs.galleryContainer.innerHTML = '';
 }
-
 // const { height: cardHeight } =
 //   refs.galleryContainer.firstElementChild.getBoundingClientRect();
 
@@ -113,3 +107,21 @@ function clearGalleryContainer() {
 //   top: cardHeight * 2,
 //   behavior: 'smooth',
 // });
+
+// function endlessScroll(gallery) {
+//   const { height: cardHeight } =
+//     gallery.firstElementChild.getBoundingClientRect();
+//   window.scrollBy({
+//     top: cardHeight * 2,
+//     behavior: 'smooth',
+//   });
+// }
+
+function simpleLightbox() {
+  let gallery = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionDelay: 250,
+    captionPosition: 'bottom',
+  });
+  gallery.refresh();
+}
