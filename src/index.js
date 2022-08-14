@@ -105,19 +105,3 @@ const insertContent = array => {
 function clearGalleryContainer() {
   refs.galleryContainer.innerHTML = '';
 }
-// const { height: cardHeight } =
-//   refs.galleryContainer.firstElementChild.getBoundingClientRect();
-
-// window.scrollBy({
-//   top: cardHeight * 2,
-//   behavior: 'smooth',
-// });
-
-// function endlessScroll(gallery) {
-//   const { height: cardHeight } =
-//     gallery.firstElementChild.getBoundingClientRect();
-//   window.scrollBy({
-//     top: cardHeight * 2,
-//     behavior: 'smooth',
-//   });
-// }
