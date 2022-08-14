@@ -1,6 +1,7 @@
 const API_KEY = '29154782-64abcd202d8466e583ce5ca87';
 const BASE_URL = 'https://pixabay.com/api';
 import axios from 'axios';
+const axios = require('axios');
 
 export default class NewsApiService {
   constructor() {
@@ -8,16 +9,25 @@ export default class NewsApiService {
     this.page = 1;
   }
 
-  fetchGallery() {
-    console.log(this);
+  fetchGallery = async () => {
     const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`;
-    return fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        this.incrementPage();
-        return data;
-      });
-  }
+
+    const response = await axios.get(url);
+    const data = response.data;
+    this.incrementPage();
+    return data;
+  };
+
+  // fetchGallery() {
+  //   console.log(this);
+  //   const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`;
+  //   return fetch(url)
+  //     .then(response => response.json())
+  //     .then(data => {
+  //
+  //       return data;
+  //     });
+  // }
 
   incrementPage() {
     this.page += 1;
@@ -35,12 +45,3 @@ export default class NewsApiService {
     this.searchQuery = newQuery;
   }
 }
-
-// const axios = require('axios').default;
-
-// const fetchData = async (value, step) => {
-//   const response = await axios.get(
-//     `https://pixabay.com/api/?key=29183300-4ae58040b754f339761bcd063&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${step}`
-//   );
-//   return response;
-// };
