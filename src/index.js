@@ -1,7 +1,6 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import axios from 'axios';
 
 import NewsApiService from './js/components/news-service';
 import LoadMoreBtn from './js/components/load-more-btn';
@@ -66,27 +65,26 @@ function onLoadMore() {
 }
 
 const createListItem = item =>
-  `<a class="gallery__link" href="${item.largeImageURL}><div class="photo-card">
-  ${
-    item.webformatURL
-      ? `<img src="${item.webformatURL}" alt="${item.tags}" loading="lazy"`
-      : ''
-  } />
-  <div class="info">
-  <p class="info-item">
-       <b>Likes ${item.likes ? item.likes : ''}</b>
-     </p>
-     <p class="info-item">
-       <b>Views ${item.views ? item.views : ''}</b>
-     </p>
-     <p class="info-item">
+  `<div class="photo-card">
+     <a class="gallery__link" href="${item.largeImageURL}  target="_blank"
+          rel="noopener noreferrer nofollow">
+       <img src="${item.webformatURL}" alt="${item.tags}" loading="lazy"/>
+      <div class="info">
+        <p class="info-item">
+        <b>Likes ${item.likes ? item.likes : ''}</b>
+        </p>
+        <p class="info-item">
+        <b>Views ${item.views ? item.views : ''}</b>
+        </p>
+        <p class="info-item">
        <b>Comments ${item.comments ? item.comments : ''}</b>
-     </p>
-     <p class="info-item">
+       </p>
+        <p class="info-item">
        <b>Downloads ${item.downloads ? item.downloads : ''}</b>
-     </p>
-   </div>
- </div></a>`;
+       </p>
+      </div>
+    </a>
+  </div>`;
 
 const generateContent = array =>
   array ? array.reduce((acc, item) => acc + createListItem(item), '') : '';
@@ -105,4 +103,5 @@ let gallery = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
   captionPosition: 'bottom',
 });
+
 gallery.refresh();
